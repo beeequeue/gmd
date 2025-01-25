@@ -1,0 +1,74 @@
+{
+  "name": "@beequeue/gmd",
+  "description": "A library for parsing and serializing MSG files for the RE Engine.",
+  "type": "module",
+  "version": "0.0.0",
+  "author": "BeeeQueue <adam@haglund.dev>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beeequeue/remsg.git"
+  },
+  "license": "MIT",
+  "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,json5,yaml,yml,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepare": "simple-git-hooks"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "4.1.0",
+    "@changesets/changelog-github": "0.5.0",
+    "@changesets/cli": "2.27.12",
+    "@tsconfig/node22": "22.0.0",
+    "@tsconfig/strictest": "2.0.5",
+    "@types/node": "22.10.10",
+    "binary-util": "1.1.0",
+    "dotenv": "16.4.7",
+    "eslint": "9.19.0",
+    "eslint-define-config": "2.1.0",
+    "lint-staged": "15.4.2",
+    "prettier": "3.4.2",
+    "publint": "0.3.2",
+    "simple-git-hooks": "2.11.1",
+    "tsup": "8.3.6",
+    "typescript": "5.7.3",
+    "vitest": "3.0.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "@eslint/markdown": "-",
+      "@stylistic/eslint-plugin": "-",
+      "eslint-plugin-jsonc": "-",
+      "eslint-plugin-toml": "-",
+      "eslint-plugin-vue": "-",
+      "eslint-processor-vue-blocks": "-",
+      "eslint-plugin-yml": "-",
+      "jsonc-eslint-parser": "-",
+      "toml-eslint-parser": "-",
+      "yaml-eslint-parser": "-",
+      "is-core-module": "npm:@nolyfill/is-core-module@^1",
+      "safer-buffer": "npm:@nolyfill/safer-buffer@^1"
+    }
+  }
+}

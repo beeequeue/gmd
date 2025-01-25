@@ -1,0 +1,27 @@
+import std.io;
+import std.mem;
+
+struct StringEntry {
+    char text[];
+};
+
+struct AlignTo<auto Alignment> {
+    padding[Alignment- ((($ - 1) % Alignment) + 1)];
+} [[hidden]];
+
+struct Header {
+    char magic[4];
+    u32 version;
+    u32 language;
+    padding[8]; // unknown (flags?)
+    u32 labelCount;
+    u32 sectionCount;
+    u32 labelSize;
+    u32 sectionSize;
+    u32 nameSize;
+};
+
+Header header @ 0x00;
+char name[header.nameSize + 1] @ $;
+
+StringEntry texts[header.sectionCount] @ $;
