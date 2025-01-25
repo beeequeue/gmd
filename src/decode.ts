@@ -9,7 +9,7 @@ const parseHeader = (parser: Decoder): GMDHeader => ({
   magic: parser.readString({ zeroed: true }) as "GMD",
   version: parser.readUint32() as GMDHeader["version"],
   language: parser.readUint32() as GMDHeader["language"],
-  ["_" as never]: parser.seek(8), // unknown (flags?)
+  unknownData: parser.readBuffer({ length: 8 }),
   labelCount: parser.readUint32(),
   sectionCount: parser.readUint32(),
   labelSize: parser.readUint32(),
@@ -62,6 +62,7 @@ export const decodeGmd = (data: Buffer): GMD => {
     version: header.version,
     language: LanguageR[header.language],
     filename,
+    unknownData: header.unknownData,
     labels: [],
     texts,
   }
