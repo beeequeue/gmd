@@ -42,6 +42,9 @@ export const decodeGmd = (data: Buffer): GMD => {
     throw new Error(`Unexpected size: ${data.length} !== ${expectedSize}`)
   }
 
+  if (header.labelCount !== 0) {
+    console.warn(`File contains ${header.labelCount} labels, and they are not supported.`)
+  }
   // Parse labels
   const labelStart = parser.currentOffset
   for (let i = 0; i < header.labelCount; i++) {}
