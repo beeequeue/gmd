@@ -24,8 +24,8 @@ export const decodeGmd = (data: Buffer): GMD => {
   if (header.magic !== "GMD") {
     throw new Error(`Invalid magic: ${header.magic as string}`)
   }
-  if (header.version !== 0x00010201 && header.version !== 0x00010302) {
-    throw new Error(`Unknown version: 0x${(header.version as number).toString(16)}`)
+  if (header.version !== 0x00010302) {
+    throw new Error(`Unknown version: 0x${header.version.toString(16)}`)
   }
 
   const filename = parser.readString({ length: header.filenameSize + 1 }).slice(0, -1)

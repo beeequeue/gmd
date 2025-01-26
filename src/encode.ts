@@ -6,8 +6,8 @@ import { Language } from "./constants"
 import type { GMD } from "./types"
 
 export const encodeGmd = (input: GMD) => {
-  if (input.version !== 0x00010201 && input.version !== 0x00010302) {
-    throw new Error(`Unsupported version 0x${(input.version as number).toString(16)}`)
+  if (input.version !== 0x00010302) {
+    throw new Error(`Unsupported version 0x${input.version.toString(16)}`)
   }
 
   // TODO: benchmark if counting length + allocating full length is faster than expanding buffer
