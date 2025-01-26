@@ -1,12 +1,12 @@
 {
   "name": "@beequeue/gmd",
-  "description": "A library for parsing and serializing MSG files for the RE Engine.",
+  "description": "A library for parsing and serializing GMD files for the MT Framework engine.",
   "type": "module",
   "version": "0.0.0",
   "author": "BeeeQueue <adam@haglund.dev>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/beeequeue/remsg.git"
+    "url": "https://github.com/beeequeue/gmd.git"
   },
   "license": "MIT",
   "packageManager": "pnpm@10.0.0",

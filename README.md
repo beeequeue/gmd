@@ -1,10 +1,10 @@
-# @beequue/gmd
+# @beequeue/gmd
 
-[![npm](https://img.shields.io/npm/v/@beequue/remsg)](https://www.npmjs.com/package/@beequue/remsg)
-![npm bundle size](https://deno.bundlejs.com/?q=@beequue/remsg&badge)
-![node-current](https://img.shields.io/node/v/@beequue/remsg)
+[![npm](https://img.shields.io/npm/v/@beequeue/gmd)](https://www.npmjs.com/package/@beequeue/gmd)
+![npm bundle size](https://deno.bundlejs.com/?q=@beequeue/gmd&badge)
+![node-current](https://img.shields.io/node/v/@beequeue/gmd)
 
-A library for parsing and serializing MSG files for the RE Engine, more specifically for Monster Hunter: Rise.
+A library for parsing and serializing GMD files for the MT Framework engine, more specifically for Monster Hunter: Generations Ultimate.
 
 ## Usage
 
@@ -12,7 +12,7 @@ A library for parsing and serializing MSG files for the RE Engine, more specific
 import { readFileSync } from "fs"
 import { encodeGmd, decodeGmd } from "@beequeue/gmd"
 
-const data = readFileSync("./somefile.gmd")
-const json = decodeGmd(data)
-const msg = encodeGmd(json)
+const buffer = readFileSync("./somefile.gmd")
+const json = decodeGmd(buffer)
+const data = encodeGmd(json)
 ```

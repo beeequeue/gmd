@@ -1,5 +1,5 @@
 ---
-"@beequeue/gmd": major
+"@beequeue/gmd": minor
 ---
 
 Initial release

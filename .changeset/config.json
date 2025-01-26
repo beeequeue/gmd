@@ -5,7 +5,7 @@
   "changelog": [
     "./changelog-formatter.cjs",
     {
-      "repo": "BeeeQueue/remsg"
+      "repo": "BeeeQueue/gmd"
     }
   ]
 }
