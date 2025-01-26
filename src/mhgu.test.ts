@@ -12,17 +12,20 @@ const realFilePath = path.resolve(
   "../fixtures/weapon00MsgData_eng.gmd",
 )
 
-it.skipIf(!existsSync(realFilePath))("should parse a real file", async () => {
-  const file = await fs.readFile(realFilePath)
-  const data = decodeGmd(file)
+it.skipIf(!existsSync(realFilePath))(
+  "should decode, encode, re-decode a real file",
+  async () => {
+    const file = await fs.readFile(realFilePath)
+    const data = decodeGmd(file)
 
-  expect(data.texts[0]).toBe("(None)")
-  expect(data.texts[6]).toBe("Petrified Blade")
+    expect(data.texts[0]).toBe("(None)")
+    expect(data.texts[6]).toBe("Petrified Blade")
 
-  const binary = encodeGmd(data)
+    const binary = encodeGmd(data)
 
-  // expect(binary.subarray(0, 250)).toStrictEqual(file.subarray(0, 250))
+    expect(binary).toStrictEqual(file)
 
-  const reparsed = decodeGmd(binary)
-  expect(reparsed).toStrictEqual(data)
-})
+    const reparsed = decodeGmd(binary)
+    expect(reparsed).toStrictEqual(data)
+  },
+)

@@ -10,7 +10,11 @@ export const encodeGmd = (input: GMD) => {
     throw new Error(`Unsupported version 0x${(input.version as number).toString(16)}`)
   }
 
-  const textLength = input.texts.reduce((acc, text) => acc + text.length + 1, 0)
+  // TODO: benchmark if counting length + allocating full length is faster than expanding buffer
+  const textLength = input.texts.reduce(
+    (acc, text) => acc + Buffer.from(text).byteLength + 1,
+    0,
+  )
   const textEncoder = new Encoder(textLength)
   for (const text of input.texts) {
     textEncoder.setString(text)
