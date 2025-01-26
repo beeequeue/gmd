@@ -32,5 +32,7 @@ export const encodeGmd = (input: GMD) => {
   headerEncoder.setUint32(textBuffer.byteLength) // section size
   headerEncoder.setUint32(input.filename.length) // filename size
 
+  headerEncoder.setString(input.filename) // filename
+
   return Buffer.concat([headerEncoder.buffer, textBuffer])
 }
