@@ -9,9 +9,25 @@ export type GMDHeader = {
   unknownData: Buffer
   metadataCount: number
   textCount: number
-  metadataSize: number
+  keysSize: number
   textSize: number
   filenameSize: number
+}
+
+export type GMDMetadataHeader = {
+  textIndex: number
+  hash1: number
+  hash2: number
+  offset: number
+  unknown: number
+}
+
+export type GMDEntry = {
+  key?: string
+  hash1?: number
+  hash2?: number
+  unknown?: number
+  text: string
 }
 
 export type GMD = {
@@ -19,6 +35,5 @@ export type GMD = {
   language: LanguageType
   filename: string
   unknownData: Buffer
-  metadata: unknown[]
-  texts: string[]
+  entries: GMDEntry[]
 }

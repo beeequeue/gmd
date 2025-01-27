@@ -5,10 +5,6 @@ struct StringEntry {
     char text[];
 };
 
-struct AlignTo<auto Alignment> {
-    padding[Alignment- ((($ - 1) % Alignment) + 1)];
-} [[hidden]];
-
 struct Header {
     char magic[4];
     u32 version;
@@ -21,7 +17,24 @@ struct Header {
     u32 nameSize;
 };
 
+struct MDHeader {
+    s32 index;
+    u32 hash1;
+    u32 hash2;
+    s32 offset;
+    s32 unknown;
+};
+
+struct BucketList {
+    if (header.labelCount > 0) {
+        u32 buckets[0x100];
+    }
+};
+
 Header header @ 0x00;
 char name[header.nameSize + 1] @ $;
+
+MDHeader mdHeaders[header.labelCount] @ $;
+BucketList bl @ $;
 
 StringEntry texts[header.sectionCount] @ $;

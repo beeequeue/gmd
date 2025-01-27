@@ -18,14 +18,35 @@ it.skipIf(!existsSync(realFilePath))(
     const file = await fs.readFile(realFilePath)
     const data = decodeGmd(file)
 
-    expect(data.texts[0]).toBe("(None)")
-    expect(data.texts[6]).toBe("Petrified Blade")
+    expect(data.entries[0].text).toBe("(None)")
+    expect(data.entries[6].text).toBe("Petrified Blade")
 
     const binary = encodeGmd(data)
 
     expect(binary).toStrictEqual(file)
 
-    const reparsed = decodeGmd(binary)
-    expect(reparsed).toStrictEqual(data)
+    const reDecoded = decodeGmd(binary)
+    expect(reDecoded).toStrictEqual(data)
+  },
+)
+
+const labelFilePath = path.resolve(import.meta.dirname, "../fixtures/Common_eng.gmd")
+it.skipIf(!existsSync(labelFilePath))(
+  "should decode, encode, re-decode a file with labels",
+  async () => {
+    const file = await fs.readFile(labelFilePath)
+    const data = decodeGmd(file)
+
+    expect(data.entries[0].text).toBe("Invalid Message")
+    expect(data.entries[1].key).toBe("COUNT")
+    expect(data.entries[1].text).toBe("%d")
+    expect(data.entries[2].key).toBe("INFINITY")
+    expect(data.entries[2].text).toBe("∞")
+
+    const binary = encodeGmd(data)
+    expect(binary).toStrictEqual(file)
+
+    const reDecoded = decodeGmd(binary)
+    expect(reDecoded).toStrictEqual(data)
   },
 )

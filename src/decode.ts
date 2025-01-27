@@ -3,7 +3,7 @@ import type { Buffer } from "node:buffer"
 import { Decoder } from "binary-util"
 
 import { LanguageR } from "./constants"
-import type { GMD, GMDHeader } from "./types"
+import type { GMD, GMDEntry, GMDHeader, GMDMetadataHeader } from "./types"
 
 const parseHeader = (parser: Decoder): GMDHeader => ({
   magic: parser.readString({ zeroed: true }) as "GMD",
@@ -12,7 +12,7 @@ const parseHeader = (parser: Decoder): GMDHeader => ({
   unknownData: parser.readBuffer({ length: 8 }),
   metadataCount: parser.readUint32(),
   textCount: parser.readUint32(),
-  metadataSize: parser.readUint32(),
+  keysSize: parser.readUint32(),
   textSize: parser.readUint32(),
   filenameSize: parser.readUint32(),
 })
@@ -36,29 +36,65 @@ export const decodeGmd = (data: Buffer): GMD => {
     1 +
     header.metadataCount * 0x14 +
     (header.metadataCount > 0 ? 0x100 * 0x4 : 0) +
-    header.metadataSize +
+    header.keysSize +
     header.textSize
-  if (expectedSize !== data.byteLength) {
-    throw new Error(`Unexpected size: ${data.length} !== ${expectedSize}`)
+  const isMobileFormat = expectedSize !== data.byteLength
+  if (isMobileFormat) {
+    throw new Error("Mobile format not implemented.")
   }
 
-  if (header.metadataCount !== 0) {
-    console.warn(`File contains metadata, which is not supported.`)
-  }
   // Parse metadata
-  const metadataStart = parser.currentOffset
-  for (let i = 0; i < header.metadataCount; i++) {}
-
-  if (metadataStart + header.metadataSize !== parser.currentOffset) {
-    throw new Error(
-      `Unexpected label size: ${header.metadataSize} !== ${parser.currentOffset - metadataStart}`,
-    )
+  const metadataHeaders = [] as GMDMetadataHeader[]
+  for (let i = 0; i < header.metadataCount; i++) {
+    metadataHeaders.push({
+      textIndex: parser.readInt32(),
+      hash1: parser.readUint32(),
+      hash2: parser.readUint32(),
+      offset: parser.readInt32(),
+      unknown: parser.readInt32(),
+    })
   }
 
-  const texts = [] as string[]
+  // Bucket list
+  const buckets = [] as number[]
+  if (header.metadataCount > 0) {
+    for (let i = 0; i < 0x100; i++) {
+      buckets.push(parser.readUint32())
+    }
+  }
 
+  // TODO: handle encrypted text
+
+  const entries = [] as GMDEntry[]
+
+  const metadataBuffer = parser.readBuffer({ length: header.keysSize })
+  const metadataParser = new Decoder(metadataBuffer)
+  for (let i = 0; i < metadataHeaders.length; i++) {
+    const metadataHeader = metadataHeaders[i]
+
+    const previous = metadataParser.goto(metadataHeader.offset)
+    const text = metadataParser.readString({ zeroed: true })
+    metadataParser.goto(previous)
+
+    entries[metadataHeader.textIndex] = {
+      key: text,
+      hash1: metadataHeader.hash1,
+      hash2: metadataHeader.hash2,
+      unknown: metadataHeader.unknown,
+      text: null!,
+    }
+  }
+
+  const textBuffer = parser.readBuffer({ length: header.textSize })
+  const textParser = new Decoder(textBuffer)
   for (let i = 0; i < header.textCount; i++) {
-    texts.push(parser.readString({ zeroed: true }))
+    const text = textParser.readString({ zeroed: true })
+
+    if (entries[i] != null) {
+      entries[i].text = text
+    } else {
+      entries[i] = { text }
+    }
   }
 
   return {
@@ -66,7 +102,6 @@ export const decodeGmd = (data: Buffer): GMD => {
     language: LanguageR[header.language],
     filename,
     unknownData: header.unknownData,
-    metadata: [],
-    texts,
+    entries,
   }
 }
