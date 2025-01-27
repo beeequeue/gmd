@@ -7,10 +7,10 @@ export type GMDHeader = {
   version: 0x00010201 | 0x00010302
   language: LanguageEnum
   unknownData: Buffer
-  labelCount: number
-  sectionCount: number
-  labelSize: number
-  sectionSize: number
+  metadataCount: number
+  textCount: number
+  metadataSize: number
+  textSize: number
   filenameSize: number
 }
 
@@ -19,6 +19,6 @@ export type GMD = {
   language: LanguageType
   filename: string
   unknownData: Buffer
-  labels: unknown[]
+  metadata: unknown[]
   texts: string[]
 }

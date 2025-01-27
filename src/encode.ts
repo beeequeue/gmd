@@ -30,10 +30,10 @@ export const encodeGmd = (input: GMD) => {
   headerEncoder.setUint32(input.version) // version
   headerEncoder.setUint32(Language[input.language]) // language
   headerEncoder.setBuffer(input.unknownData) // unknown (flags??)
-  headerEncoder.setUint32(input.labels.length) // label count
-  headerEncoder.setUint32(input.texts.length) // section count
-  headerEncoder.setUint32(0) // TODO: label size
-  headerEncoder.setUint32(textBuffer.byteLength) // section size
+  headerEncoder.setUint32(input.metadata.length) // metadata count
+  headerEncoder.setUint32(input.texts.length) // text count
+  headerEncoder.setUint32(0) // TODO: metadata size
+  headerEncoder.setUint32(textBuffer.byteLength) // text size
   headerEncoder.setUint32(input.filename.length) // filename size
 
   headerEncoder.setString(input.filename) // filename

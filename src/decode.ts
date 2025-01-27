@@ -10,10 +10,10 @@ const parseHeader = (parser: Decoder): GMDHeader => ({
   version: parser.readUint32() as GMDHeader["version"],
   language: parser.readUint32() as GMDHeader["language"],
   unknownData: parser.readBuffer({ length: 8 }),
-  labelCount: parser.readUint32(),
-  sectionCount: parser.readUint32(),
-  labelSize: parser.readUint32(),
-  sectionSize: parser.readUint32(),
+  metadataCount: parser.readUint32(),
+  textCount: parser.readUint32(),
+  metadataSize: parser.readUint32(),
+  textSize: parser.readUint32(),
   filenameSize: parser.readUint32(),
 })
 
@@ -34,30 +34,30 @@ export const decodeGmd = (data: Buffer): GMD => {
     0x28 +
     filename.length +
     1 +
-    header.labelCount * 0x14 +
-    (header.labelCount > 0 ? 0x100 * 0x4 : 0) +
-    header.labelSize +
-    header.sectionSize
+    header.metadataCount * 0x14 +
+    (header.metadataCount > 0 ? 0x100 * 0x4 : 0) +
+    header.metadataSize +
+    header.textSize
   if (expectedSize !== data.byteLength) {
     throw new Error(`Unexpected size: ${data.length} !== ${expectedSize}`)
   }
 
-  if (header.labelCount !== 0) {
-    console.warn(`File contains ${header.labelCount} labels, and they are not supported.`)
+  if (header.metadataCount !== 0) {
+    console.warn(`File contains metadata, which is not supported.`)
   }
-  // Parse labels
-  const labelStart = parser.currentOffset
-  for (let i = 0; i < header.labelCount; i++) {}
+  // Parse metadata
+  const metadataStart = parser.currentOffset
+  for (let i = 0; i < header.metadataCount; i++) {}
 
-  if (labelStart + header.labelSize !== parser.currentOffset) {
+  if (metadataStart + header.metadataSize !== parser.currentOffset) {
     throw new Error(
-      `Unexpected label size: ${header.labelSize} !== ${parser.currentOffset - labelStart}`,
+      `Unexpected label size: ${header.metadataSize} !== ${parser.currentOffset - metadataStart}`,
     )
   }
 
   const texts = [] as string[]
 
-  for (let i = 0; i < header.sectionCount; i++) {
+  for (let i = 0; i < header.textCount; i++) {
     texts.push(parser.readString({ zeroed: true }))
   }
 
@@ -66,7 +66,7 @@ export const decodeGmd = (data: Buffer): GMD => {
     language: LanguageR[header.language],
     filename,
     unknownData: header.unknownData,
-    labels: [],
+    metadata: [],
     texts,
   }
 }
