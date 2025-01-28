@@ -103,5 +103,6 @@ export const encodeGmd = (input: GMD) => {
 
   headerEncoder.setString(input.filename) // filename
 
+  // TODO: benchmark push instead of concat for perf
   return Buffer.concat([headerEncoder.buffer, metadataBuffer, keysBuffer, textBuffer])
 }
