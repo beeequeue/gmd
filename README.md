@@ -6,6 +6,8 @@
 
 A library for parsing and serializing GMD files for the MT Framework engine, more specifically for Monster Hunter: Generations Ultimate.
 
+Largely based on the work in [onepiecefreak3/GMDConverter](https://github.com/onepiecefreak3/GMDConverter).
+
 ## Usage
 
 ```typescript
