@@ -48,8 +48,8 @@ export const decodeGmd = (data: Buffer): GMD => {
   for (let i = 0; i < header.metadataCount; i++) {
     metadataHeaders.push({
       textIndex: parser.readInt32(),
-      hash1: parser.readUint32(),
-      hash2: parser.readUint32(),
+      hash1: parser.readInt32(),
+      hash2: parser.readInt32(),
       offset: parser.readInt32(),
       unknown: parser.readInt32(),
     })

@@ -22,13 +22,21 @@ export type GMDMetadataHeader = {
   unknown: number
 }
 
-export type GMDEntry = {
-  key?: string
-  hash1?: number
-  hash2?: number
-  unknown?: number
-  text: string
-}
+export type GMDEntry =
+  | {
+      text: string
+      key?: undefined
+      hash1?: undefined
+      hash2?: undefined
+      unknown?: undefined
+    }
+  | {
+      text: string
+      key: string
+      hash1: number
+      hash2: number
+      unknown: number
+    }
 
 export type GMD = {
   version: 0x00010201 | 0x00010302

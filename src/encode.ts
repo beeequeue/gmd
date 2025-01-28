@@ -22,15 +22,14 @@ export const encodeGmd = (input: GMD) => {
     metadataCount = metadataEntries.length
 
     const mdEncoder = new Encoder(metadataEntries.length * 0x14)
-    let currentOffset = 0
+    let currentKeyOffset = 0
     for (const metadata of metadataEntries) {
       mdEncoder.setInt32(metadata.index)
-      mdEncoder.setUint32(metadata.hash1!)
-      mdEncoder.setUint32(metadata.hash2!)
-      mdEncoder.setInt32(currentOffset)
+      mdEncoder.setInt32(~crc32(metadata.key! + metadata.key!))
+      mdEncoder.setInt32(~crc32(metadata.key! + metadata.key! + metadata.key!))
+      mdEncoder.setInt32(currentKeyOffset)
       mdEncoder.setInt32(metadata.unknown!)
-
-      currentOffset += Buffer.from(metadata.key!).length + 1
+      currentKeyOffset += Buffer.from(metadata.key!).length + 1
     }
 
     // TODO: bucket data

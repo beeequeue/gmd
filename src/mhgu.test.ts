@@ -44,7 +44,7 @@ it.skipIf(!existsSync(labelFilePath))(
     expect(data.entries[2].text).toBe("∞")
 
     const binary = encodeGmd(data)
-    expect(binary).toStrictEqual(file)
+    expect(binary.toString("hex")).toStrictEqual(file.toString("hex"))
 
     const reDecoded = decodeGmd(binary)
     expect(reDecoded).toStrictEqual(data)
