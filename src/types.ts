@@ -1,6 +1,6 @@
 import type { Buffer } from "node:buffer"
 
-import type { LanguageEnum, LanguageType } from "./constants"
+import type { LanguageEnum, LanguageType } from "./constants.ts"
 
 export type GMDHeader = {
   magic: "GMD"

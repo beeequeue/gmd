@@ -4,8 +4,8 @@ import path from "node:path"
 
 import { expect, it } from "vitest"
 
-import { decodeGmd } from "./decode"
-import { encodeGmd } from "./encode"
+import { decodeGmd } from "./decode.ts"
+import { encodeGmd } from "./encode.ts"
 
 const realFilePath = path.resolve(
   import.meta.dirname,

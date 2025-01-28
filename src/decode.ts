@@ -2,8 +2,8 @@ import type { Buffer } from "node:buffer"
 
 import { Decoder } from "binary-util"
 
-import { LanguageR } from "./constants"
-import type { GMD, GMDEntry, GMDHeader, GMDMetadataHeader } from "./types"
+import { LanguageR } from "./constants.ts"
+import type { GMD, GMDEntry, GMDHeader, GMDMetadataHeader } from "./types.ts"
 
 const parseHeader = (parser: Decoder): GMDHeader => ({
   magic: parser.readString({ zeroed: true }) as "GMD",

@@ -6,14 +6,16 @@
     "sourceMap": true,
 
     // Modules
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "baseUrl": "./src",
     "paths": {
       "~/*": ["src/*"]
     },
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
 
     // Lessen strictness
     "importsNotUsedAsValues": "remove",
@@ -21,7 +23,6 @@
     "noPropertyAccessFromIndexSignature": false,
     "noUncheckedIndexedAccess": false,
     "exactOptionalPropertyTypes": false,
-    "verbatimModuleSyntax": false,
 
     // Extra types
     "types": ["node"]

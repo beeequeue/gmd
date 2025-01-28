@@ -3,8 +3,8 @@ import { crc32 } from "node:zlib"
 
 import { Encoder } from "binary-util"
 
-import { Language } from "./constants"
-import type { GMD, GMDEntry } from "./types"
+import { Language } from "./constants.ts"
+import type { GMD, GMDEntry } from "./types.ts"
 
 export const encodeGmd = (input: GMD) => {
   if (input.version !== 0x00010302) {
