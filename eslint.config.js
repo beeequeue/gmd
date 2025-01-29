@@ -13,6 +13,7 @@ export default antfu({
     tsconfigPath: "tsconfig.json",
     overrides: {
       "no-console": "off",
+      "new-cap": "off",
       "ts/no-use-before-define": "off",
       "ts/consistent-type-definitions": "off",
       "ts/consistent-type-imports": ["error", { fixStyle: "inline-type-imports" }],

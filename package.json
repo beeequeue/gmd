@@ -25,11 +25,15 @@
     "dist",
     "CHANGELOG.md"
   ],
+  "bin": {
+    "gmd": "./dist/cli/index.js"
+  },
   "exports": {
     "types": "./dist/index.d.ts",
     "import": "./dist/index.js"
   },
   "scripts": {
+    "cli": "node --experimental-strip-types src/cli/index.ts",
     "build": "tsup",
     "lint": "eslint src",
     "test": "vitest",
@@ -42,15 +46,24 @@
     "@changesets/cli": "2.27.12",
     "@tsconfig/node22": "22.0.0",
     "@tsconfig/strictest": "2.0.5",
+    "@types/cli-progress": "3.11.6",
+    "@types/is-glob": "4.0.4",
     "@types/node": "22.12.0",
+    "@types/picomatch": "3.0.2",
     "binary-util": "1.1.1",
+    "cli-progress": "3.12.0",
     "dotenv": "16.4.7",
     "eslint": "9.19.0",
     "eslint-define-config": "2.1.0",
+    "fdir": "6.4.3",
+    "is-glob": "4.0.3",
     "lint-staged": "15.4.3",
+    "mri": "1.2.0",
+    "picomatch": "4.0.2",
     "prettier": "3.4.2",
     "publint": "0.3.2",
     "simple-git-hooks": "2.11.1",
+    "tinyrainbow": "2.0.0",
     "tsup": "8.3.6",
     "typescript": "5.7.3",
     "vitest": "3.0.4"
