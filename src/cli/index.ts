@@ -113,7 +113,7 @@ for (const inputFilePath of uniqueInputFiles) {
       ? path.join(
           args.out,
           path.basename(commonDir),
-          inputFilePath.slice(commonDir.length),
+          path.dirname(inputFilePath.slice(commonDir.length)),
         )
       : path.dirname(inputFilePath),
     outputFilename,
