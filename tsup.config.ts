@@ -13,6 +13,10 @@ export default defineConfig({
     }
   },
 
+  banner: {
+    js: "import {createRequire} from 'module';const require=createRequire(import.meta.url);",
+  },
+
   dts: true,
   bundle: true,
   sourcemap: true,
