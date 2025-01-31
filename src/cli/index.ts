@@ -14,7 +14,8 @@ import { decodeGmd } from "../decode.ts"
 import { encodeGmd } from "../encode.ts"
 import type { GMD } from "../types.ts"
 
-import { checkIfDir, findCommonDir, logError } from "./utils.ts"
+import { findCommonPathStart, getOutputPath } from "./path-utils.ts"
+import { checkIfDir, logError } from "./utils.ts"
 
 type Options = {
   help?: boolean
@@ -92,9 +93,9 @@ if (uniqueInputFiles.length === 0) {
   logError("No input files found", true)
 }
 
-let commonDir = ""
+let commonDirIndex: number | undefined
 if (args.out != null) {
-  commonDir = findCommonDir(uniqueInputFiles)
+  commonDirIndex = findCommonPathStart(uniqueInputFiles)
 }
 
 const bar = new SingleBar({}, Presets.shades_classic)
@@ -107,17 +108,7 @@ for (const inputFilePath of uniqueInputFiles) {
       ? JSON.stringify(decodeGmd(data), null, 2)
       : encodeGmd(JSON.parse(data.toString("utf8")) as GMD)
 
-  const outputFilename = `${path.basename(inputFilePath, ".gmd")}.gmd.json`
-  const outputPath = path.join(
-    args.out != null
-      ? path.join(
-          args.out,
-          path.basename(commonDir),
-          path.dirname(inputFilePath.slice(commonDir.length)),
-        )
-      : path.dirname(inputFilePath),
-    outputFilename,
-  )
+  const outputPath = getOutputPath(inputFilePath, commonDirIndex, args.out)
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true })
   fs.writeFileSync(outputPath, output)

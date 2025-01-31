@@ -1,5 +1,4 @@
 import fs from "node:fs"
-import path from "node:path"
 
 import colors from "tinyrainbow"
 
@@ -37,19 +36,4 @@ export const checkIfDir = (input: string): boolean => {
 
   memoizedDir = [input, result]
   return result
-}
-
-export const findCommonDir = (paths: string[]): string => {
-  const commonDir = paths.reduce((acc, filePath) => {
-    const dir = path.dirname(filePath)
-    if (dir.startsWith(acc)) return acc
-
-    while (!dir.startsWith(acc)) {
-      acc = acc.split("/").slice(0, -1).join("/")
-    }
-
-    return acc
-  }, path.dirname(paths[0]))
-
-  return commonDir
 }
