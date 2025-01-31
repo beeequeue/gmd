@@ -50,3 +50,18 @@ it.skipIf(!existsSync(labelFilePath))(
     expect(reDecoded).toStrictEqual(data)
   },
 )
+
+const nameFilePath = path.resolve(import.meta.dirname, "../fixtures/NpcName_eng.gmd")
+it.skipIf(!existsSync(nameFilePath))(
+  "should decode, encode, re-decode NpcName_eng.gmd",
+  async () => {
+    const file = await fs.readFile(nameFilePath)
+    const data = decodeGmd(file)
+
+    const binary = encodeGmd(data)
+    expect(binary.toString("hex")).toStrictEqual(file.toString("hex"))
+
+    const reDecoded = decodeGmd(binary)
+    expect(reDecoded).toStrictEqual(data)
+  },
+)
