@@ -51,12 +51,14 @@ if (args.help) {
 const command = args._[0]
 if (command !== "decode" && command !== "encode") {
   console.log(help)
-  logError("Invalid command, should be 'decode' or 'encode'.", true)
+  logError("Invalid command, should be 'decode' or 'encode'.")
+  process.exit(1)
 }
 
 const input = args._[1]?.replaceAll(/\\/g, "/")
 if (input == null) {
-  logError("Missing input file, directory, or glob", true)
+  logError("Missing input file, directory, or glob")
+  process.exit(1)
 }
 
 const inputFiles: string[] = []
@@ -88,7 +90,8 @@ if (isGlob(input) || checkIfDir(input)) {
 const uniqueInputFiles = Array.from(new Set(inputFiles))
 
 if (uniqueInputFiles.length === 0) {
-  logError("No input files found", true)
+  logError("No input files found")
+  process.exit(1)
 }
 
 let commonDirIndex: number | undefined

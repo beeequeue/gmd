@@ -12,18 +12,9 @@ const indent = (str: string, spaces: number): string => {
   return lines.map((line, index) => (index !== 0 ? `${space}${line}` : line)).join("\n")
 }
 
-export const logError = <Exit extends boolean>(
-  error: Error | string,
-  exit?: Exit,
-): Exit extends true ? never : void => {
+export const logError = (error: Error | string) => {
   const message = error instanceof Error ? error.message : error
   console.error(colors.red(`❌ ${indent(message, 3)}`))
-
-  if (exit) {
-    process.exit(1)
-  }
-
-  return undefined as never
 }
 
 export const toJson = (input: GMD): string => {
