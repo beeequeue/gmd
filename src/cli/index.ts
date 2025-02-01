@@ -18,16 +18,14 @@ import { fromJson, logError, toJson } from "./utils.ts"
 
 type Options = {
   help?: boolean
-  force?: boolean
   out?: string
 }
 
 const args = mri<Options>(process.argv.slice(2), {
-  boolean: ["help", "force"],
+  boolean: ["help"],
   string: ["out"],
   alias: {
     h: "help",
-    f: "force",
     o: "out",
   },
 })
@@ -42,7 +40,6 @@ Commands:
 Options:
   <input>           ${colors.gray("file, directory, or glob pattern to process")}
   -h, --help        ${colors.gray("Show this help message")}
-  -f, --force       ${colors.gray("Overwrite existing file(s)")}
   -o, --out         ${colors.gray("Output directory, defaults to same directory as input file")}
 `.trim()
 
