@@ -12,10 +12,9 @@ import colors from "tinyrainbow"
 
 import { decodeGmd } from "../decode.ts"
 import { encodeGmd } from "../encode.ts"
-import type { GMD } from "../types.ts"
 
 import { checkIfDir, findCommonPathStart, getOutputPath } from "./path-utils.ts"
-import { logError } from "./utils.ts"
+import { fromJson, logError, toJson } from "./utils.ts"
 
 type Options = {
   help?: boolean
@@ -105,8 +104,8 @@ for (const inputFilePath of uniqueInputFiles) {
   const data = fs.readFileSync(inputFilePath)
   const output =
     command === "decode"
-      ? JSON.stringify(decodeGmd(data), null, 2)
-      : encodeGmd(JSON.parse(data.toString("utf8")) as GMD)
+      ? toJson(decodeGmd(data))
+      : encodeGmd(fromJson(data.toString("utf8")))
 
   const outputPath = getOutputPath(inputFilePath, commonDirIndex, args.out)
 

@@ -1,4 +1,8 @@
+import { Buffer } from "node:buffer"
+
 import colors from "tinyrainbow"
+
+import type { GMD } from "../types.js"
 
 const indent = (str: string, spaces: number): string => {
   const lines = str.split("\n")
@@ -20,4 +24,28 @@ export const logError = <Exit extends boolean>(
   }
 
   return undefined as never
+}
+
+export const toJson = (input: GMD): string => {
+  const data = {
+    filename: input.filename,
+    version: input.version,
+    language: input.language,
+    unknownData: input.unknownData.toString("base64url"),
+    entries: input.entries,
+  } satisfies Omit<GMD, "unknownData"> & { unknownData: string }
+
+  return JSON.stringify(data, null, 2)
+}
+
+export const fromJson = (input: string): GMD => {
+  const data = JSON.parse(input) as Omit<GMD, "unknownData"> & { unknownData: string }
+
+  return {
+    filename: data.filename,
+    version: data.version,
+    language: data.language,
+    unknownData: Buffer.from(data.unknownData, "base64url"),
+    entries: data.entries,
+  }
 }
