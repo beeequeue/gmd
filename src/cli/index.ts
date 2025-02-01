@@ -75,7 +75,9 @@ if (isGlob(input) || checkIfDir(input)) {
 
   let finish: APIBuilder<PathsOutput>
   if (checkIfDir(input)) {
-    finish = builder.filter((file) => file.endsWith(".gmd")).crawl(input)
+    finish = builder
+      .filter((file) => file.endsWith(command === "decode" ? ".gmd" : ".gmd.json"))
+      .crawl(input)
   } else {
     const { base, glob } = pico.scan(input)
     finish = builder.glob(glob).crawl(base)
