@@ -1,3 +1,4 @@
+import fs from "node:fs"
 import path from "node:path"
 
 export const findCommonPathStart = (paths: string[]): number => {
@@ -30,4 +31,18 @@ export const getOutputPath = (
   const inputPathWithoutCommonPath = inputFilePath.slice(commonDirIndex)
   const outputPath = `${outDir}/${inputPathWithoutCommonPath}`
   return fixExtension(outputPath)
+}
+
+let memoizedDir: [string, boolean] | null = null
+export const checkIfDir = (input: string): boolean => {
+  if (input == null) return false
+  if (memoizedDir?.[0] === input) return memoizedDir[1]
+
+  let result = false
+  try {
+    result = fs.lstatSync(input).isDirectory()
+  } catch {}
+
+  memoizedDir = [input, result]
+  return result
 }

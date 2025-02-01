@@ -14,8 +14,8 @@ import { decodeGmd } from "../decode.ts"
 import { encodeGmd } from "../encode.ts"
 import type { GMD } from "../types.ts"
 
-import { findCommonPathStart, getOutputPath } from "./path-utils.ts"
-import { checkIfDir, logError } from "./utils.ts"
+import { checkIfDir, findCommonPathStart, getOutputPath } from "./path-utils.ts"
+import { logError } from "./utils.ts"
 
 type Options = {
   help?: boolean
