@@ -19,10 +19,11 @@ import { fromJson, logError, toJson } from "./utils.ts"
 type Options = {
   help?: boolean
   out?: string
+  print?: boolean
 }
 
 const args = mri<Options>(process.argv.slice(2), {
-  boolean: ["help"],
+  boolean: ["help", "print"],
   string: ["out"],
   alias: {
     h: "help",
@@ -41,6 +42,7 @@ Options:
   <input>           ${colors.gray("file, directory, or glob pattern to process")}
   -h, --help        ${colors.gray("Show this help message")}
   -o, --out         ${colors.gray("Output directory, defaults to same directory as input file")}
+  --print           ${colors.gray("Print output to console instead of writing to file (only works with one file input)")}
 `.trim()
 
 if (args.help) {
@@ -52,6 +54,10 @@ const command = args._[0]
 if (command !== "decode" && command !== "encode") {
   console.log(help)
   logError("Invalid command, should be 'decode' or 'encode'.")
+  process.exit(1)
+}
+if (command !== "decode" && args.print) {
+  logError("The --print option only works with the 'decode' command")
   process.exit(1)
 }
 
@@ -89,6 +95,10 @@ if (isGlob(input) || checkIfDir(input)) {
 
 const uniqueInputFiles = Array.from(new Set(inputFiles))
 
+if (args.print && uniqueInputFiles.length !== 1) {
+  logError("The --print option only works with a single input file")
+  process.exit(1)
+}
 if (uniqueInputFiles.length === 0) {
   logError("No input files found")
   process.exit(1)
@@ -97,6 +107,14 @@ if (uniqueInputFiles.length === 0) {
 let commonDirIndex: number | undefined
 if (args.out != null) {
   commonDirIndex = findCommonPathStart(uniqueInputFiles)
+}
+
+if (args.print) {
+  const data = fs.readFileSync(uniqueInputFiles[0])
+  const output = decodeGmd(data)
+
+  console.log(toJson(output))
+  process.exit(0)
 }
 
 const bar = new SingleBar({}, Presets.shades_classic)
