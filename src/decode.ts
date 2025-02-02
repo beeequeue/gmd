@@ -56,11 +56,9 @@ export const decodeGmd = (data: Buffer): GMD => {
   }
 
   // Bucket list
-  const buckets = [] as number[]
+  let bucketData: Buffer | undefined
   if (header.metadataCount > 0) {
-    for (let i = 0; i < 0x100; i++) {
-      buckets.push(parser.readUint32())
-    }
+    bucketData = parser.readBuffer({ length: 0x100 * 4 })
   }
 
   // TODO: handle encrypted text
@@ -97,11 +95,16 @@ export const decodeGmd = (data: Buffer): GMD => {
     }
   }
 
-  return {
+  const gmd: GMD = {
     version: header.version,
     language: LanguageR[header.language],
     filename,
     unknownData: header.unknownData,
     entries,
   }
+  if (bucketData != null) {
+    gmd.bucketData = bucketData
+  }
+
+  return gmd
 }

@@ -22,43 +22,22 @@ export const encodeGmd = (input: GMD) => {
       .filter(({ key }) => key != null)
     metadataCount = metadataEntries.length
 
-    const buckets = new Map<number, number>()
-    let bucketCounter = 0
     const mdEncoder = new Encoder(metadataEntries.length * 0x14)
     let currentKeyOffset = 0
     for (const metadata of metadataEntries) {
-      let listLink = 0
-      const bucket = ~crc32(metadata.key!) & 0xff
-      if (buckets.has(bucket)) {
-        listLink = bucketCounter
-        buckets.set(bucket, bucketCounter)
-      }
-
       mdEncoder.setInt32(metadata.index)
       mdEncoder.setInt32(~crc32(metadata.key! + metadata.key!))
       mdEncoder.setInt32(~crc32(metadata.key! + metadata.key! + metadata.key!))
       mdEncoder.setInt32(currentKeyOffset)
-      mdEncoder.setInt32(listLink)
+      mdEncoder.setInt32(metadata.bucketSomething!)
 
       currentKeyOffset += Buffer.from(metadata.key!).length + 1
-
-      bucketCounter++
     }
 
-    const bucketBuffer = Buffer.alloc(4 * 0x100)
-    let counter2 = 0
-    for (let i = 0; i < input.entries.length; i++) {
-      const entry = input.entries[i]
-      if (entry.key == null) continue
-
-      const bucketIndex = ~crc32(entry.key) & 0xff
-      if (bucketBuffer[bucketIndex] !== 0) continue
-
-      bucketBuffer.writeInt32LE(counter2 !== 0 ? counter2 : -1, bucketIndex * 4)
-      counter2++
-    }
-
-    metadataBuffer = Buffer.concat([mdEncoder.buffer, bucketBuffer])
+    metadataBuffer =
+      input.bucketData != null
+        ? Buffer.concat([mdEncoder.buffer, input.bucketData])
+        : mdEncoder.buffer
   }
 
   let keysBuffer = Buffer.alloc(0)

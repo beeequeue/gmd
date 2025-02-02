@@ -9,7 +9,7 @@ import { encodeGmd } from "./encode.ts"
 
 const realFilePath = path.resolve(
   import.meta.dirname,
-  "../fixtures/weapon00MsgData_eng.gmd",
+  "../fixtures/mhgu/simple/weapon00MsgData_eng.gmd",
 )
 
 it.skipIf(!existsSync(realFilePath))(
@@ -58,7 +58,10 @@ it.skipIf(!existsSync(labelFilePath))(
   },
 )
 
-const nameFilePath = path.resolve(import.meta.dirname, "../fixtures/NpcName_eng.gmd")
+const nameFilePath = path.resolve(
+  import.meta.dirname,
+  "../fixtures/mhgu/keys/NpcName_eng.gmd",
+)
 it.skipIf(!existsSync(nameFilePath))(
   "should decode, encode, re-decode NpcName_eng.gmd",
   async () => {

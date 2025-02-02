@@ -47,5 +47,6 @@ export type GMD = {
   language: LanguageType
   filename: string
   unknownData: Buffer
+  bucketData?: Buffer
   entries: GMDEntry[]
 }
