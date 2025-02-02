@@ -12,8 +12,8 @@ const parseHeader = (parser: Decoder): GMDHeader => ({
   unknownData: parser.readBuffer({ length: 8 }),
   metadataCount: parser.readUint32(),
   textCount: parser.readUint32(),
-  keysSize: parser.readUint32(),
-  textSize: parser.readUint32(),
+  keyBlockSize: parser.readUint32(),
+  textBlockSize: parser.readUint32(),
   filenameSize: parser.readUint32(),
 })
 
@@ -36,8 +36,8 @@ export const decodeGmd = (data: Buffer): GMD => {
     1 +
     header.metadataCount * 0x14 +
     (header.metadataCount > 0 ? 0x100 * 0x4 : 0) +
-    header.keysSize +
-    header.textSize
+    header.keyBlockSize +
+    header.textBlockSize
   const isMobileFormat = expectedSize !== data.byteLength
   if (isMobileFormat) {
     throw new Error("Mobile format not implemented.")
@@ -51,7 +51,7 @@ export const decodeGmd = (data: Buffer): GMD => {
       hash1: parser.readInt32(),
       hash2: parser.readInt32(),
       offset: parser.readInt32(),
-      unknown: parser.readInt32(),
+      bucketSomething: parser.readInt32(),
     })
   }
 
@@ -67,7 +67,7 @@ export const decodeGmd = (data: Buffer): GMD => {
 
   const entries = [] as GMDEntry[]
 
-  const metadataBuffer = parser.readBuffer({ length: header.keysSize })
+  const metadataBuffer = parser.readBuffer({ length: header.keyBlockSize })
   const metadataParser = new Decoder(metadataBuffer)
   for (let i = 0; i < metadataHeaders.length; i++) {
     const metadataHeader = metadataHeaders[i]
@@ -80,12 +80,12 @@ export const decodeGmd = (data: Buffer): GMD => {
       key: text,
       hash1: metadataHeader.hash1,
       hash2: metadataHeader.hash2,
-      unknown: metadataHeader.unknown,
+      bucketSomething: metadataHeader.bucketSomething,
       text: null!,
     }
   }
 
-  const textBuffer = parser.readBuffer({ length: header.textSize })
+  const textBuffer = parser.readBuffer({ length: header.textBlockSize })
   const textParser = new Decoder(textBuffer)
   for (let i = 0; i < header.textCount; i++) {
     const text = textParser.readString({ zeroed: true })
