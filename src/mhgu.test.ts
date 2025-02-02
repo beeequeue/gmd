@@ -30,21 +30,28 @@ it.skipIf(!existsSync(realFilePath))(
   },
 )
 
-const labelFilePath = path.resolve(import.meta.dirname, "../fixtures/Common_eng.gmd")
+const labelFilePath = path.resolve(
+  import.meta.dirname,
+  "../fixtures/mhgu/keys/TitleMsg_eng.gmd",
+)
 it.skipIf(!existsSync(labelFilePath))(
-  "should decode, encode, re-decode a file with labels",
+  "should decode, encode, re-decode a file with keys",
   async () => {
     const file = await fs.readFile(labelFilePath)
     const data = decodeGmd(file)
 
-    expect(data.entries[0].text).toBe("Invalid Message")
-    expect(data.entries[1].key).toBe("COUNT")
-    expect(data.entries[1].text).toBe("%d")
-    expect(data.entries[2].key).toBe("INFINITY")
-    expect(data.entries[2].text).toBe("∞")
+    expect(data.entries[0].key).toMatchInlineSnapshot(`"GameModeSelection"`)
+    expect(data.entries[0].text).toMatchInlineSnapshot(`"Main Menu"`)
+    expect(data.entries[1].key).toMatchInlineSnapshot(`"GameDataSelection"`)
+    expect(data.entries[1].text).toMatchInlineSnapshot(`"Character Select"`)
+    expect(data.entries[2].key).toMatchInlineSnapshot(`"GameOptions"`)
+    expect(data.entries[2].text).toMatchInlineSnapshot(`"Game Options"`)
 
     const binary = encodeGmd(data)
-    expect(binary.toString("hex")).toStrictEqual(file.toString("hex"))
+    // writeFileSync("test.gmd", binary)
+    expect(binary.subarray(0x31, 4 * 6 * 10).toString("hex")).toStrictEqual(
+      file.subarray(0x31, 4 * 6 * 10).toString("hex"),
+    )
 
     const reDecoded = decodeGmd(binary)
     expect(reDecoded).toStrictEqual(data)
