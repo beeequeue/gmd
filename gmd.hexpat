@@ -9,32 +9,32 @@ struct Header {
     char magic[4];
     u32 version;
     u32 language;
-    padding[8]; // unknown (flags?)
-    u32 labelCount;
+    u8 unknownData[8]; // unknown (flags?)
+    u32 keyCount;
     u32 sectionCount;
-    u32 labelSize;
-    u32 sectionSize;
-    u32 nameSize;
+    u32 keyBlockSize;
+    u32 sectionBlockSize;
+    u32 filenameSize;
 };
 
 struct MDHeader {
-    s32 index;
-    u32 hash1;
-    u32 hash2;
-    s32 offset;
-    s32 unknown;
+    u32 index;
+    s32 hash1;
+    s32 hash2;
+    u32 keyOffset;
+    s32 bucketIndex;
 };
 
 struct BucketList {
-    if (header.labelCount > 0) {
+    if (header.keyCount > 0) {
         u32 buckets[0x100];
     }
 };
 
 Header header @ 0x00;
-char name[header.nameSize + 1] @ $;
+char name[header.filenameSize + 1] @ $;
 
-MDHeader mdHeaders[header.labelCount] @ $;
+MDHeader mdHeaders[header.keyCount] @ $;
 BucketList bl @ $;
 
 StringEntry texts[header.sectionCount] @ $;
