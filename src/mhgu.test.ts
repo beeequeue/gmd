@@ -2,6 +2,7 @@ import { existsSync } from "node:fs"
 import fs from "node:fs/promises"
 import path from "node:path"
 
+import { fdir } from "fdir"
 import { expect, it } from "vitest"
 
 import { decodeGmd } from "./decode.ts"
@@ -58,20 +59,15 @@ it.skipIf(!existsSync(labelFilePath))(
   },
 )
 
-const nameFilePath = path.resolve(
-  import.meta.dirname,
-  "../fixtures/mhgu/keys/NpcName_eng.gmd",
-)
-it.skipIf(!existsSync(nameFilePath))(
-  "should decode, encode, re-decode NpcName_eng.gmd",
-  async () => {
-    const file = await fs.readFile(nameFilePath)
-    const data = decodeGmd(file)
+const fixtures = await new fdir().withBasePath().crawl("./fixtures/mhgu").withPromise()
 
-    const binary = encodeGmd(data)
-    expect(binary.toString("hex")).toStrictEqual(file.toString("hex"))
+it.each(fixtures)("should decode, encode, re-decode files %#", async (fixture) => {
+  const file = await fs.readFile(path.join(import.meta.dirname, "..", fixture))
+  const data = decodeGmd(file)
 
-    const reDecoded = decodeGmd(binary)
-    expect(reDecoded).toStrictEqual(data)
-  },
-)
+  const binary = encodeGmd(data)
+  expect(binary.toString("hex")).toStrictEqual(file.toString("hex"))
+
+  const reDecoded = decodeGmd(binary)
+  expect(reDecoded).toStrictEqual(data)
+})
