@@ -1,7 +1,7 @@
 # @beequeue/gmd
 
 [![npm](https://img.shields.io/npm/v/@beequeue/gmd)](https://www.npmjs.com/package/@beequeue/gmd)
-![npm bundle size](https://deno.bundlejs.com/?q=@beequeue/gmd&badge)
+[![npm bundle size](https://deno.bundlejs.com/badge?q=@beequeue/gmd&treeshake=[{+encodeGmd,decodeGmd+}])](https://bundlejs.com/?q=%40beequeue%2Fgmd&treeshake=%5B%7B+encodeGmd%2CdecodeGmd+%7D%5D)
 ![node-current](https://img.shields.io/node/v/@beequeue/gmd)
 
 A library for parsing and serializing GMD files for the MT Framework engine, more specifically for Monster Hunter: Generations Ultimate.
