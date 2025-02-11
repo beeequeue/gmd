@@ -1,12 +1,12 @@
 import fs from "node:fs"
 import path from "node:path"
 
+import { parse } from "@bomb.sh/args"
 import { Presets, SingleBar } from "cli-progress"
 import { fdir } from "fdir"
 import type { PathsOutput } from "fdir"
 import type { APIBuilder } from "fdir/dist/builder/api-builder.js"
 import isGlob from "is-glob"
-import mri from "mri"
 import pico from "picomatch"
 import colors from "tinyrainbow"
 
@@ -16,13 +16,7 @@ import { encodeGmd } from "../encode.ts"
 import { checkIfDir, findCommonPathStart, getOutputPath } from "./path-utils.ts"
 import { fromJson, logError, toJson } from "./utils.ts"
 
-type Options = {
-  help?: boolean
-  out?: string
-  print?: boolean
-}
-
-const args = mri<Options>(process.argv.slice(2), {
+const args = parse(process.argv.slice(2), {
   boolean: ["help", "print"],
   string: ["out"],
   alias: {
@@ -61,7 +55,7 @@ if (command !== "decode" && args.print) {
   process.exit(1)
 }
 
-const input = args._[1]?.replaceAll(/\\/g, "/")
+const input = (args._[1] as string)?.replaceAll(/\\/g, "/")
 if (input == null) {
   logError("Missing input file, directory, or glob")
   process.exit(1)

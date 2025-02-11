@@ -25,6 +25,9 @@ importers:
       '@antfu/eslint-config':
         specifier: 4.1.0
         version: 4.1.0(@typescript-eslint/utils@8.22.0(eslint@9.19.0)(typescript@5.7.3))(eslint@9.19.0)(typescript@5.7.3)(vitest@3.0.4(@types/node@22.12.0)(yaml@2.7.0))
+      '@bomb.sh/args':
+        specifier: 0.3.0
+        version: 0.3.0
       '@changesets/changelog-github':
         specifier: 0.5.0
         version: 0.5.0
@@ -73,9 +76,6 @@ importers:
       lint-staged:
         specifier: 15.4.3
         version: 15.4.3
-      mri:
-        specifier: 1.2.0
-        version: 1.2.0
       picomatch:
         specifier: 4.0.2
         version: 4.0.2
@@ -163,6 +163,9 @@ packages:
   '@babel/runtime@7.26.7':
     resolution: {integrity: sha512-AOPI3D+a8dXnja+iwsUqGRjr1BbZIe771sXdapOtYI531gSqpi92vXivKcq2asu/DFpdl1ceFAKZyRzK2PCVcQ==}
     engines: {node: '>=6.9.0'}
+
+  '@bomb.sh/args@0.3.0':
+    resolution: {integrity: sha512-ufLrPUVSfU3dSn2uA+gJlls+eQYOKoFSGxHm6Si9Cx7lLu1oANLop+jKCm+2eBe1tHoGLi50B1QvcPpK8yuD8w==}
 
   '@changesets/apply-release-plan@7.0.8':
     resolution: {integrity: sha512-qjMUj4DYQ1Z6qHawsn7S71SujrExJ+nceyKKyI9iB+M5p9lCL55afuEd6uLBPRpLGWQwkwvWegDHtwHJb1UjpA==}
@@ -2298,6 +2301,8 @@ snapshots:
   '@babel/runtime@7.26.7':
     dependencies:
       regenerator-runtime: 0.14.1
+
+  '@bomb.sh/args@0.3.0': {}
 
   '@changesets/apply-release-plan@7.0.8':
     dependencies:

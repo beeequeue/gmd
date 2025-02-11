@@ -9,7 +9,7 @@
     "url": "https://github.com/beeequeue/gmd.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@10.0.0",
+  "packageManager": "pnpm@10.3.0",
   "engines": {
     "node": ">=20"
   },
@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "4.1.0",
+    "@bomb.sh/args": "0.3.0",
     "@changesets/changelog-github": "0.5.0",
     "@changesets/cli": "2.27.12",
     "@tsconfig/node22": "22.0.0",
@@ -58,7 +59,6 @@
     "fdir": "6.4.3",
     "is-glob": "4.0.3",
     "lint-staged": "15.4.3",
-    "mri": "1.2.0",
     "picomatch": "4.0.2",
     "prettier": "3.4.2",
     "publint": "0.3.2",
