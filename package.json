@@ -9,7 +9,7 @@
     "url": "https://github.com/beeequeue/gmd.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@10.0.0",
+  "packageManager": "pnpm@10.3.0",
   "engines": {
     "node": ">=20"
   },
@@ -48,7 +48,7 @@
     "@tsconfig/strictest": "2.0.5",
     "@types/cli-progress": "3.11.6",
     "@types/is-glob": "4.0.4",
-    "@types/node": "22.12.0",
+    "@types/node": "22.13.1",
     "@types/picomatch": "3.0.2",
     "binary-util": "1.1.1",
     "cli-progress": "3.12.0",
@@ -60,7 +60,7 @@
     "lint-staged": "15.4.3",
     "mri": "1.2.0",
     "picomatch": "4.0.2",
-    "prettier": "3.4.2",
+    "prettier": "3.5.0",
     "publint": "0.3.2",
     "simple-git-hooks": "2.11.1",
     "tinyrainbow": "2.0.0",
