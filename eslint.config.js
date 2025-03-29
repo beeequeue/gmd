@@ -7,10 +7,10 @@ export default antfu({
   jsonc: false,
   jsx: false,
   toml: false,
-  yaml: false,
   test: { overrides: { "test/no-import-node-test": "off" } },
   typescript: {
     tsconfigPath: "tsconfig.json",
+    ignoresTypeAware: ["copy.ts"],
     overrides: {
       "no-console": "off",
       "new-cap": "off",
@@ -21,13 +21,13 @@ export default antfu({
       "ts/no-unsafe-assignment": "off",
       "node/prefer-global/process": "off",
       "antfu/no-top-level-await": "off",
-      "unicorn/number-literal-case": "off",
+      "import/consistent-type-specifier-style": "off",
 
       "perfectionist/sort-imports": [
         "error",
         {
           type: "natural",
-          internalPattern: ["@/.+?", "~/.+?"],
+          internalPattern: ["^@/", "^~/", "^#[a-zA-Z0-9-]+/"],
           newlinesBetween: "always",
           groups: [
             ["builtin", "builtin-type"],
