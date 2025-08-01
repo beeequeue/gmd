@@ -41,7 +41,7 @@
     "prepare": "simple-git-hooks"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "4.16.1",
+    "@antfu/eslint-config": "5.0.0",
     "@bomb.sh/args": "0.3.1",
     "@changesets/changelog-github": "0.5.1",
     "@changesets/cli": "2.29.2",
