@@ -9,7 +9,7 @@
     "url": "https://github.com/beeequeue/gmd.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@10.10.0",
+  "packageManager": "pnpm@10.26.2",
   "engines": {
     "node": ">=20"
   },
@@ -43,29 +43,29 @@
   "devDependencies": {
     "@antfu/eslint-config": "5.4.1",
     "@bomb.sh/args": "0.3.1",
-    "@changesets/changelog-github": "0.5.1",
-    "@changesets/cli": "2.29.2",
-    "@tsconfig/node22": "22.0.1",
-    "@tsconfig/strictest": "2.0.5",
+    "@changesets/changelog-github": "0.5.2",
+    "@changesets/cli": "2.29.8",
+    "@tsconfig/node22": "22.0.5",
+    "@tsconfig/strictest": "2.0.8",
     "@types/cli-progress": "3.11.6",
     "@types/is-glob": "4.0.4",
-    "@types/node": "22.15.3",
-    "@types/picomatch": "4.0.0",
+    "@types/node": "22.19.3",
+    "@types/picomatch": "4.0.2",
     "binary-util": "1.1.1",
     "cli-progress": "3.12.0",
-    "dotenv": "16.5.0",
+    "dotenv": "16.6.1",
     "eslint": "9.39.1",
-    "fdir": "6.4.4",
+    "fdir": "6.5.0",
     "is-glob": "4.0.3",
     "lint-staged": "16.2.7",
-    "picomatch": "4.0.2",
-    "prettier": "3.5.3",
+    "picomatch": "4.0.3",
+    "prettier": "3.7.4",
     "publint": "0.3.15",
-    "simple-git-hooks": "2.13.0",
+    "simple-git-hooks": "2.13.1",
     "tinyrainbow": "2.0.0",
-    "tsup": "8.4.0",
-    "typescript": "5.8.3",
-    "vitest": "3.1.2"
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4"
   },
   "pnpm": {
     "overrides": {
