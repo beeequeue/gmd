@@ -65,7 +65,7 @@
     "tinyrainbow": "2.0.0",
     "tsup": "8.4.0",
     "typescript": "5.8.3",
-    "vitest": "3.1.2"
+    "vitest": "3.2.6"
   },
   "pnpm": {
     "overrides": {
