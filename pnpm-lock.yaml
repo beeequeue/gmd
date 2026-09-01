@@ -13,8 +13,8 @@ overrides:
   eslint-processor-vue-blocks: '-'
   jsonc-eslint-parser: '-'
   toml-eslint-parser: '-'
-  is-core-module: npm:@nolyfill/is-core-module@^1
-  safer-buffer: npm:@nolyfill/safer-buffer@^1
+  is-core-module: npm:@nolyfill/is-core-module@1.0.39
+  safer-buffer: npm:@nolyfill/safer-buffer@1.0.44
 
 importers:
 
