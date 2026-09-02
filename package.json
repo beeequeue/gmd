@@ -45,7 +45,7 @@
     "@bomb.sh/args": "0.3.1",
     "@changesets/changelog-github": "0.5.1",
     "@changesets/cli": "2.29.2",
-    "@tsconfig/node22": "22.0.1",
+    "@tsconfig/node24": "24.0.0",
     "@tsconfig/strictest": "2.0.5",
     "@types/cli-progress": "3.11.6",
     "@types/is-glob": "4.0.4",
